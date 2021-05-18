@@ -1,4 +1,4 @@
-###CUENTA AWS###
+###AWS ACCOUNT###
 aws_profile    =  # Profile of aws configure (string)
 region         =  # Region defined in aws configure (string)
   
