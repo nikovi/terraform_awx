@@ -1,37 +1,38 @@
 # terraform_awx
 
 
-1) Entrar a la consola de aws, crear una bucket S3 y reemplazar en "backend.tf" los siguientes campos con el 
-nombre de dicha bucket:
+1) Enter the aws console, create an S3 bucket and replace in "backend.tf" the following fields with the
+name of said bucket:
 
-* resource -> aws_s3_bucket -> terraform_state -> bucket = "nombre la bucket s3 que acabamos de crear".
-* resource -> aws_dynamodb_table -> terraform_state_lock -> name = "nombre la bucket s3 que acabamos de crear".
-* terraform -> bucket = "nombre la bucket s3 que acabamos de crear".
-* terraform -> dynamo_table = "nombre la bucket s3 que acabamos de crear".
+* resource -> aws_s3_bucket -> terraform_state -> bucket = "The name of the s3 bucket we just created".
+* resource -> aws_dynamodb_table -> terraform_state_lock -> name = "The name of the s3 bucket we just created".
+* terraform -> bucket = "The name of the s3 bucket we just created".
+* terraform -> dynamo_table = "The name of the s3 bucket we just created".
 
-Esto va a configurar nuestro terraform state lock.
+This will configure our terraform state lock.
 
-2) En backend.tf reemplazar el campo:
+2) In backend.tf replace the field:
 
-* terraform -> profile = "el nombre de el profile donde esten configuradas nuestras keys de AWS".
+* terraform -> profile = "the name of the profile where our AWS keys are configured".
 
-3) crear una .pem key en la consola de EC2 y descargarla. Usaremos esta .pem para hacer que remote_exec instale paquetes en la 
-instancia y para que luego podamos entrar por ssh a la misma.
+3) Create a .pem key in the EC2 console and download it. We will use this .pem to make remote_exec install packages in the
+instance and so that later we can enter by ssh to it.
 
-4) completar los campos de variables en "terraform.tfvars".
+4) Fill in the variable fields in "terraform.tfvars".
 
-5) ejecutar en la terminal los siguientes comandos de terraform:
+
+5) Run the following terraform commands in the terminal:
 
 terraform init
 terraform plan -lock=false
 terraform apply -lock=false
 
-El flag -lock=false en necesario solo la primera vez que se ejecute el terraform plan y apply. Luego pueden ejecutarse cambios usando solo:
+The -lock = false flag is required only the first time the terraform plan and apply is executed. After that changes can then be executed using just:
 
 terraform init
 terraform plan
 terraform apply
 
-Y esperar aproximadamente entre 10 y 20 minutos que termine de provisionar y configurar la instancia.
+And wait approximately 10-20 minutes for it to finish provisioning and configuring the instance.
 
-6) AWX puede ser accedido por el puerto 8043 de la instancia EC2 provisionada.
+6) AWX can be accessed through port 8043 of the provisioned EC2 instance.
