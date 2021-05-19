@@ -36,6 +36,7 @@ resource "aws_instance" "awx_instance" {
       "docker-compose -f tools/docker-compose/_sources/docker-compose.yml up -d",
       "docker exec tools_awx_1 make clean-ui",
       "docker exec tools_awx_1 make ui-devel",
+      "docker update --restart unless-stopped $(docker ps -q)",
       "docker exec -ti tools_awx_1 awx-manage createsuperuser --username ${var.awx_username} --email ${var.awx_email} --noinput",
       "docker exec -ti tools_awx_1 awx-manage update_password --username ${var.awx_username} --password ${var.awx_password}"
     ]
